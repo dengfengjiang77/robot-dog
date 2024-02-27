@@ -9,8 +9,18 @@ from MoteusException import MoteusPermissionsError, MoteusCanError
 class MotorController(MoteusController):
 	"""
 		TODO: Add class and function definition and explanation
+
 	"""
-	async def on_open(self, transport=None, servos=None):  # Starts on open
+	async def on_open(self, transport=None, servos=None):
+		"""
+		TODO: Add function definition and explanation
+		Args:
+
+		Returns:
+
+		Raise:
+		"""
+		# Starts on open
 		if transport is not None and servos is not None:
 			results = await transport.cycle([x.make_stop(query=True) for x in servos.values()])
 			self.mprint([x.make_stop(query=True) for x in servos.values()])
@@ -32,9 +42,15 @@ class MotorController(MoteusController):
 	async def main(self):
 		"""
 		TODO: Add function definition and explanation
+		Args:
+
+		Returns:
+
+		Raise:
 		"""
 		self.mprint("in main")
-		servo_bus_map = {}  # Servo bus map is for the pi3hat router in order to know which motors are on which CAN bus
+		# Servo bus map is for the pi3hat router in order to know which motors are on which CAN bus
+		servo_bus_map = {}  
 		for i in range(len(self.ids)):  # Go through all of CAN buses
 			bus_ids = []
 			for bus_id in self.ids[i]:  # Go through all the IDs in the particular bus
@@ -57,8 +73,8 @@ class MotorController(MoteusController):
 
 		# Set the rawIDs so they can be used later for reference. Using local variables where possible saves a sliver of time
 		raw_ids = self.raw_ids
-
-		self.isReady.set()  # Set ready to true so the class can be implemented elsewhere
+		# Set ready to true so the class can be implemented elsewhere
+		self.isReady.set()  
 
 		while not self.exitFlag:  # Loop while the exit method was not called
 			# print("looping")
@@ -81,6 +97,11 @@ class MotorController(MoteusController):
 	async def run(self):
 		"""
 		TODO: Add function definition and explanation
+		Args:
+
+		Returns:
+
+		Raise:
 		"""
 		if len(self.mainResults) == 0:
 			self.moteus_task = asyncio.create_task(self.main())
